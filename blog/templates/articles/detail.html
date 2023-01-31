@@ -1,0 +1,21 @@
+{% extends 'layouts/layout.html' %}
+
+{% block title  %} {{article.title}} {% endblock %}
+
+
+{% block content %}
+
+
+    {% if article.image != 'null' %}
+        <img src="{{article.image.url}}" style="width:50%; height:50%" />
+    {% endif %}
+
+    <h1 class="title"> {{article.title}} </h1>
+    
+    <span class="date">{{article.created_at}}</span>
+    
+    <p class="content"> 
+        {{article.content|safe}} 
+    </p>
+
+{% endblock %}

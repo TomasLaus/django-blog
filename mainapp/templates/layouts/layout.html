@@ -1,0 +1,104 @@
+<!--
+    Dos formas de enviar datos:
+    GET: Viajan por url
+    POST: Viajan por las cabeceras http
+-->
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset='utf-8' />
+        <title>
+            {% block title %}
+
+            {% endblock %}
+            | Tomas Laus
+        </title>
+        {% load static %}    
+        <link rel='stylesheet' type='text/css' href="{% static 'css/styles.css' %}" /> 
+    </head>
+    <body>
+        <!--Cabecera de la página-->
+        <header>
+            <div id="logotipo">
+                <!--Logo Django-->
+                <img src="{% static 'images/logo.png' %}" />
+                <h1>Proyecto <strong>Django</strong></h1>
+            </div>
+        </header>
+
+
+        <nav>
+
+            {% if user.email %}
+            <ul>
+                <li>
+                    <!--<a href = '/'>Inicio</a>-->
+                    <a href="{% url 'index' %}"><strong>Inicio</strong></a>
+                </li>
+
+
+                <li>
+                    <!--<a href = '/'>Inicio</a>-->
+                    <a href="{% url 'list_articles' %}"><strong>Categorias</strong></a>
+                    <ul>
+                        {% for category in categories %}
+                            <li><a href="{% url 'category' category.0 %}"><strong>{{category.1}}</strong></a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+
+                {% for page in pages %}
+                
+                    <li>
+                        <a href="{% url 'page' page.2 %}"><strong>{{ page.1 }}</strong></a>
+                    </li>
+
+                {% endfor %}
+                
+                <li>
+                    <a href="{% url 'logout' %}"><strong>{{user.username}} - Cerrar sesion</strong></a>
+                </li>
+            </ul>
+        </nav>
+
+                {% else %}
+                <nav>
+                    <ul>
+
+                <li>
+                    <a href="{% url 'register' %}"><strong>Registrarse</strong></a>
+                </li>
+
+                <li>
+                    <a href="{% url 'login' %}"><strong>Ingresar</strong></a>
+                </li>
+            </nav>
+        </ul>
+
+            {% endif %}
+
+
+
+
+        <div class="barra">
+            <span class="esquina-izquierda"></span>
+            <span class="relleno-barra"></span>
+            <span class="esquina-derecha"></span>
+        </div>
+
+        <div id="content">
+            <div class="box">
+                {% block content %}
+                    <!--Código que viene de templates-->
+                    <strong>Contenido del bloque original!!></strong>
+                {% endblock %}
+            </div>
+        </div>
+
+        <footer>
+            Master en python &copy; Tomas Laus - {% now "d/m/Y" %}
+        </footer>
+
+    </body>
+</html>

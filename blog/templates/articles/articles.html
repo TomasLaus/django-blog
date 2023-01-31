@@ -1,0 +1,48 @@
+{% for article in articles %}
+<article class="article-item">
+
+
+
+    <div >
+        <h2>
+            
+            <a href="{% url 'article' article.id %}">{{article.title}} </a>
+        </h2>
+        
+        <p>
+            
+            {% for category in article.categories.all %}
+            
+            <a href="{% url 'category' category.id %}">[{{category.name}}] </a>
+
+                {% if forloop.counter < article.categories.all|length %}
+                    {{'-   '   }}
+                {% endif %}
+            
+            {%endfor%}
+            
+        </p>
+        <p class="date" style="display:block,margin-top:55px">
+            {{article.user}}
+            
+            |
+            {{article.created_at}}
+        
+        </p>
+
+
+        {% if article.image != 'null' %}
+
+        <img src="{{article.image.url}}" style="width:100px; height:100px" />
+
+        {% endif %}
+
+        
+        <p style="margin-top:25px">
+            {{article.content|safe}}
+        </p>
+        
+    </div>
+
+</article>
+{% endfor %}
